@@ -6,7 +6,7 @@
         version   = "1.0.0">
 
   <name>shappy</name>
-  
+
   <description>
     Shappy
   </description>
@@ -37,5 +37,5 @@
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
 
-  <access origin="*"/>
+  <access origin="*" subdomains="true"/>
 </widget>
