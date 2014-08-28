@@ -54,8 +54,8 @@ angular.module('ionicApp', ['ionic', 'ngResource', 'angularMoment'])
 })
 
 .factory("Post", function($resource) {
-  //return $resource("http://shappi.herokuapp.com/posts/:id", null,
-  return $resource("http://localhost:3000/posts/:id", null,
+  return $resource("http://shappi.herokuapp.com/posts/:id", null,
+  //return $resource("http://localhost:3000/posts/:id", null,
      {
          'update': { method:'PUT' }
      });
