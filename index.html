@@ -1,0 +1,131 @@
+<html ng-app="ionicApp">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Shappy</title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- ionic/angularjs js -->
+    <script src="http://code.ionicframework.com/1.0.0-beta.11/js/ionic.bundle.js"></script>
+    <script src="lib/angular-resource/angular-resource.js"></script>
+
+    <!-- moment angular js -->
+    <script src="lib/moment/moment.js"></script>
+    <script src="lib/moment/lang/fr.js"></script>
+    <script src="lib/angular-moment/angular-moment.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+  </head>
+
+  <body>
+
+    <ion-nav-view animation="slide-left-right"></ion-nav-view>
+
+    <script id="sign-in.html" type="text/ng-template">
+      <ion-view title="NameApp">
+        <ion-content>
+          <div class="list list-inset">
+            <label class="item item-input">
+              <input type="text" placeholder="Code" ng-model="user.code">
+            </label>
+          </div>
+          <div class="padding">
+            <button class="button button-block button-outline icon ion-log-in button-royal" ng-click="signIn(user)"></button>
+          </div>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="tabs.html" type="text/ng-template">
+      <ion-view>
+
+          <ion-nav-bar class="bar-light">
+            <ion-nav-view name="header"></ion-nav-view>
+          </ion-nav-bar>
+
+          <ion-tabs class="tabs-royal tabs-icon-only" animation="slide-left-right">
+
+            <ion-tab title="Home" icon="ion-home" href="#/tab/home">
+              <ion-nav-view name="home-tab"></ion-nav-view>
+            </ion-tab>
+
+            <ion-tab title="New" icon="ion-plus-circled" href="#/tab/new">
+              <ion-nav-view name="new-tab"></ion-nav-view>
+            </ion-tab>
+
+            <ion-tab title="Sign-Out" icon="ion-log-out" href="#/sign-in">
+            </ion-tab>
+
+          </ion-tabs>
+
+      </ion-view>
+    </script>
+
+    <script id="home.html" type="text/ng-template">
+      <ion-view ng-init="refresh()">
+        <ion-content>
+
+          <ion-refresher
+            on-refresh="refresh()">
+          </ion-refresher>
+
+          <div class="list card" ng-repeat="post in posts | orderBy:'created_at':true">
+
+            <div class="item item-body">
+
+              <p><strong> {{post.content}}</strong></p>
+              <p><i class="icon ion-calendar"> {{post.created_at | amCalendar}}</i></p>
+            </div>
+
+            <div class="item tabs tabs-secondary tabs-icon-left">
+              <a class="tab-item button button-royal button-clear" href ng-click="like(post)">
+                <i class="icon ion-thumbsup"> <small><small>{{post.yes}}</small></small></i>
+              </a>
+              <a class="tab-item button button-dark button-clear" href ng-click="unlike(post)">
+                <i class="icon ion-thumbsdown"> <small><small>{{post.no}}</small></small></i>
+              </a>
+            </div>
+
+          </div>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="home-header.html" type="text/ng-template">
+      <ion-view>
+        <div class="bar bar-header item-input-inset">
+          <label class="item-input-wrapper">
+            <i class="icon ion-ios7-search placeholder-icon"></i>
+            <input type="search">
+          </label>
+        </div>
+      </ion-view>
+    </script>
+
+    <script id="new.html" type="text/ng-template">
+      <ion-view>
+        <ion-content padding="true">
+
+          <form name="newPostForm" ng-submit="update()" novalidate>
+            <div class="list list-inset">
+              <label class="item item-input">
+                <textarea placeholder="Your happy thing..." rows="20" ng-model="post.content" required></textarea>
+              </label>
+            </div>
+            <button type="submit" class="button button-block button-royal button-outline" ng-disabled="newPostForm.$invalid">
+              OK
+            </button>
+          </form>
+
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <script id="new-header.html" type="text/ng-template"></script>
+
+  </body>
+</html>

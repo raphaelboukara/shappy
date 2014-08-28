@@ -1,0 +1,12 @@
+/* Empty. Add your own CSS if you like */
+.tabs-royal > .tabs, .tabs.tabs-royal {
+	padding-top: 7px;
+}
+
+.item-body p {
+	margin-top: 0px;
+}
+
+.date i {
+	font-size: 14px !important;
+}
