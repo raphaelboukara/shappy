@@ -94,7 +94,7 @@ angular.module('ionicApp', ['ionic', 'ngResource', 'angularMoment'])
 
   $scope.post = {};
 
-  $scope.update = function() {
+  $scope.create = function() {
     var post = new Post();
     post.content = $scope.post.content;
     post.$save();
