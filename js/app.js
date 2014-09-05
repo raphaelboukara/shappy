@@ -4,11 +4,10 @@ angular.module('ionicApp', ['ionic', 'ngResource', 'angularMoment'])
     amMoment.changeLanguage('fr');
 })
 
-.config(['$httpProvider', function($httpProvider) {
+.config(function($httpProvider) {
         $httpProvider.defaults.useXDomain = true;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    }
-])
+})
 
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -54,25 +53,40 @@ angular.module('ionicApp', ['ionic', 'ngResource', 'angularMoment'])
 })
 
 .factory("Post", function($resource) {
-  return $resource("http://shappi.herokuapp.com/posts/:id", null,
-  //return $resource("http://localhost:3000/posts/:id", null,
+  //return $resource("http://shappi.herokuapp.com/posts/:id", null,
+  return $resource("http://localhost:3000/users/:user_id/posts/:id", null,
      {
          'update': { method:'PUT' }
      });
 })
 
-.controller('SignInCtrl', function($scope, $state) {
+.factory("User", function($resource) {
+  //return $resource("http://shappi.herokuapp.com/posts/:id", null,
+  return $resource("http://localhost:3000/users/:id", null,
+     {
+         'update': { method:'PUT' }
+     });
+})
+
+.controller('SignInCtrl', function($rootScope, $scope, $state, User) {
   
-  $scope.signIn = function(user) {
-    $state.go('tabs.home');
+  $scope.user = {};
+
+  $scope.signIn = function() {
+    var user = new User();
+    user.name = $scope.user.name;
+    user.$save().then(function(data) {
+      $rootScope.user = data;
+      $state.go('tabs.home');
+    });
   };
   
 })
 
-.controller('HomeTabCtrl', function($scope, Post) {
+.controller('HomeTabCtrl', function($rootScope, $scope, Post) {
   
   $scope.refresh = function() {
-    Post.query(function(posts) {
+    Post.query({user_id: $rootScope.user.id}, function(posts) {
       $scope.posts = posts;
       $scope.$broadcast('scroll.refreshComplete');
     });
@@ -80,25 +94,26 @@ angular.module('ionicApp', ['ionic', 'ngResource', 'angularMoment'])
 
   $scope.like = function(post) {
     post.yes += 1;
-    Post.update({ id:post.id }, post);
+    Post.update({ user_id: $rootScope.user.id, id:post.id }, post);
   };
 
   $scope.unlike = function(post) {
     post.no += 1;
-    Post.update({ id:post.id }, post);
+    Post.update({ user_id: $rootScope.user.id, id:post.id }, post);
   };
 
 })
 
-.controller('newPostCtrl', function($scope, $state, Post) {
+.controller('newPostCtrl', function($rootScope, $scope, $state, Post) {
 
   $scope.post = {};
 
   $scope.create = function() {
     var post = new Post();
     post.content = $scope.post.content;
-    post.$save();
-    $state.go('tabs.home');
+    post.$save({user_id: $rootScope.user.id}).then(function(data){
+      $state.go('tabs.home');
+    });
   };
 
 });

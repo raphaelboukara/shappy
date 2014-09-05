@@ -25,25 +25,27 @@
 
     <ion-nav-view animation="slide-left-right"></ion-nav-view>
 
+    <!-- SIGN IN -->
     <script id="sign-in.html" type="text/ng-template">
       <ion-view title="NameApp">
         <ion-content>
           <div class="list list-inset">
             <label class="item item-input">
-              <input type="text" placeholder="Code" ng-model="user.code">
+              <input type="text" placeholder="Name" ng-model="user.name">
             </label>
           </div>
           <div class="padding">
-            <button class="button button-block button-outline icon ion-log-in button-royal" ng-click="signIn(user)"></button>
+            <button class="button button-block button-outline icon ion-log-in button-royal" ng-click="signIn()"></button>
           </div>
         </ion-content>
       </ion-view>
     </script>
 
+    <!-- TABS -->
     <script id="tabs.html" type="text/ng-template">
       <ion-view>
 
-          <ion-nav-bar class="bar-light">
+          <ion-nav-bar class="bar-royal">
             <ion-nav-view name="header"></ion-nav-view>
           </ion-nav-bar>
 
@@ -65,6 +67,7 @@
       </ion-view>
     </script>
 
+    <!-- TABS HOME -->
     <script id="home.html" type="text/ng-template">
       <ion-view ng-init="refresh()">
         <ion-content>
@@ -95,6 +98,7 @@
       </ion-view>
     </script>
 
+    <!-- TABS HOME HEADER -->
     <script id="home-header.html" type="text/ng-template">
       <ion-view>
         <div class="bar bar-header item-input-inset">
@@ -106,6 +110,7 @@
       </ion-view>
     </script>
 
+    <!-- TABS NEW -->
     <script id="new.html" type="text/ng-template">
       <ion-view>
         <ion-content padding="true">
@@ -125,6 +130,7 @@
       </ion-view>
     </script>
 
+    <!-- TABS NEW HEADER -->
     <script id="new-header.html" type="text/ng-template"></script>
 
   </body>
